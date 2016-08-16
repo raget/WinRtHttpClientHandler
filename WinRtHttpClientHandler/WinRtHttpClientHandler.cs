@@ -14,9 +14,9 @@ using rt = Windows.Web.Http;
 namespace WindowsRuntime.HttpClientFilters
 {
     /// <summary>
-    ///     An HttpMessageHandler that lets you use the Windows Runtime IHttpFilter types
+    ///     An HttpClientHandler that lets you use the Windows Runtime IHttpFilter types
     /// </summary>
-    public class WinRtHttpClientHandler : HttpMessageHandler
+    public class WinRtHttpClientHandler : HttpClientHandler
     {
         private static readonly Version NoVersion = new Version(0, 0);
         private static readonly Version Version10 = new Version(1, 0);
@@ -34,7 +34,8 @@ namespace WindowsRuntime.HttpClientFilters
             CheckDisposed();
             var rtRequestMessage = await ConvertHttpRequestMessaageToRt(request, cancellationToken).ConfigureAwait(false);
             var rtResponseMessage = await rtClient.SendRequestAsync(rtRequestMessage).AsTask(cancellationToken).ConfigureAwait(false);
-            return await ConvertRtResponseMessageToNet(rtResponseMessage, cancellationToken).ConfigureAwait(false);            
+            return await ConvertRtResponseMessageToNet(rtResponseMessage, cancellationToken).ConfigureAwait(false);
+            
         }
 
         internal static async Task<rt.HttpRequestMessage> ConvertHttpRequestMessaageToRt(HttpRequestMessage message, CancellationToken token)
